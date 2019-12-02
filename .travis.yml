@@ -1,0 +1,17 @@
+services:
+  - docker
+
+language: shell
+
+stages:
+  - build
+
+jobs:
+  include:
+    - stage: build
+    - script:
+        - echo "There should be a test here!"
+
+notifications:
+  slack:
+    secure: "T6IEPSmcID6iMSgUGGVNgOttG400bLm7mJJQ9tvhTEbS/miB3eQsg22hxjgf2VuzTFihKmzaM8NUcbxUQL3czeuG4NoFK1hI2LtCzF33QHHhiBUbgBpoYfH/Ad1CSiSsHuHcZqwFTvJ9U94rdT9EgKszkhcxJOuRsymv/QNxIaFcUwHm93zAXRcRb1D+7rKkgVipxbQKG0ujRKkrlOx/CpOX1mXjm4VF/F7zQeG1ZiOypWC6ZjgTLmGvdqQwwxRXo1RqXFkefVIDg64e+AM1zu5RMuPfLb28s88TdRYIzufPvXvk8UXCVjSS/3QWgW2rTijYYRQh6i9GKmJ7Klelmwx/MPjV2AMhRXnDGKnZLDSy2GwpvIydRjTy23HTwQQ7nv87pzLb/UxtGfPtMhoaA7/LYtPZVUejcZMxd9Ztziz+EoSb9sFfs+3EVNd8xpFXeNObH21xDgH4wWf801d7dmItwuihurK/asb+QgIYMmFNFdSJaLfwchARl0dFZs4J4mGdZDQK2RcYjZBBVU1F35XJgfTN/f82/lrzPIJ2dwKvPtw1N6KXnEbdhohstGo1VOzjeIVgwoZacIiIi9umOQnUE/6O3yoaZN4QZ7fboDkbBICZzZ8/tECW+tRv10myLInc4/RRZU+muAP0MBmGhKHJYOOf+QEgKP6KSQZn248="
