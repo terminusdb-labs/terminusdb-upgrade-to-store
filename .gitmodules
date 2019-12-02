@@ -1,0 +1,6 @@
+[submodule "hdt"]
+	path = hdt
+	url = https://github.com/terminusdb/terminus-server
+[submodule "store"]
+	path = store
+	url = https://github.com/terminusdb/terminus-server
