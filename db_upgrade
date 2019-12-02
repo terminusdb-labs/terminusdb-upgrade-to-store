@@ -1,0 +1,83 @@
+#!/usr/bin/env swipl
+% -*- mode: prolog;-*-
+
+:- initialization(main).
+
+% Set up access to the libraries
+:- prolog_load_context(directory, Dir),
+   atomic_list_concat([Dir,'hdt/library'],One_Up),
+   absolute_file_name(One_Up,Lib),
+   asserta(user:file_search_path(hdt_library, Lib)).
+
+% Set up access to the libraries
+:- prolog_load_context(directory, Dir),
+   atomic_list_concat([Dir,'store/library'],One_Up),
+   absolute_file_name(One_Up,Lib),
+   asserta(user:file_search_path(store_library, Lib)).
+
+% Need access to hdt and terminus_store
+:- use_module(library(terminus_store)).
+:- use_module(library(hdt)).
+:- use_module(library(optparse)).
+
+% Load HDT database predicates
+
+
+
+/*****************************************************
+ * Opts 
+ *****************************************************/ 
+opt_spec([[opt(help),
+           type(boolean),
+           shortflags([h]),
+           longflags([help]),
+           default(false),
+           help('print this help')],
+
+          [opt(path),
+           type(atom),
+           shortflags([p]),
+           longflags([path]),
+           default(false),
+           required(true),
+           help('path to hdt database to upgrade')]
+         ]).
+
+/*
+ * help(+Cmd:atom,-Help:atom) is det.
+ */
+help(Cmd,Spec,Help) :-
+    file_base_name(Cmd,Name),
+    opt_help(Spec,Help_Text),
+    format(atom(Help),'Usage: ~s [OPTIONS]~n~n~s', [Name,Help_Text]).
+
+
+program(Prog) :-
+    current_prolog_flag(associated_file,Prog).
+
+main(Args) :-
+
+    program(Prog),
+
+    opt_spec(Spec),
+    opt_parse(Spec,Args,Opts,_),
+
+    help(Prog,Spec,Help_Text),
+
+    (   memberchk(help(true), Opts)
+    ->  write(Help_Text),
+        halt
+    ;   memberchk(help(Path), Opts),
+        Path \= false
+    ->  true
+    ;   write(Help_Text),
+        halt),
+
+    database_name_list(Database_Names),
+
+    forall(
+        member(DBN, Database_Names),
+        (   make_database_from_database_name(Database_Name,Database),
+            with
+            
+    
