@@ -54,6 +54,25 @@ help(Cmd,Spec,Help) :-
 program(Prog) :-
     current_prolog_flag(associated_file,Prog).
 
+check_valid_dir(Directory) :-
+    format(string(PrefixDbFile), "~s/~s", [Directory, "/prefix.db"]),
+    exists_file(PrefixDbFile).
+
+process_graph(GraphDir) :-
+    print("TODO, Process the graph directory").
+
+process_graphs([]) :-
+    true.
+process_graphs(DirectoryList) :-
+    selectchk(Dir, DirectoryList, ResultingList),
+    process_graph(Dir),
+    process_graphs(ResultingList).
+
+process_db_dir(Directory) :-
+    format(string(DirWildCard), "~s/http*", [Directory]),
+    expand_file_name(DirWildCard, Entries),
+    process_graphs(Entries).
+
 main(Args) :-
 
     program(Prog),
@@ -71,9 +90,8 @@ main(Args) :-
     ->  true
     ;   write(Help_Text),
         halt),
-
-    database_name_list(Database_Names),
-    forall(
-        member(DBN, Database_Names),
-        (   make_database_from_database_name(Database_Name,Database),
-            with
+    (   check_valid_dir(Path)
+    ->  true
+    ;   format("Not a valid DB directory!~n"),
+        halt),
+    process_db_dir(Path).
