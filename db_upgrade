@@ -39,7 +39,6 @@ opt_spec([[opt(help),
            shortflags([p]),
            longflags([path]),
            default(false),
-           required(true),
            help('path to hdt database to upgrade')]
          ]).
 
@@ -79,5 +78,3 @@ main(Args) :-
         member(DBN, Database_Names),
         (   make_database_from_database_name(Database_Name,Database),
             with
-            
-    
