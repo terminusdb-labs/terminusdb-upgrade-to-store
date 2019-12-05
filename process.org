@@ -1,0 +1,15 @@
+* Converting
+
+The old terminus-server kept ttl files of every new layer, the positive and negative plane.
+This makes it pretty easy to load the triples with rdf_read_turtle/3, without having to use
+hdt itself.
+
+Steps:
+
+1. Ensure that the DB dir exists (check it by looking for prefix.db)
+2. Traverse through the database directory
+3. Read every positive plane and negative ttl from the graph dir and add/remove them
+   with terminus-store-prolog accordingly
+4. Copy the prefix.db?
+
+Is this it?
