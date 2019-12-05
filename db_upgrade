@@ -66,14 +66,13 @@ main(Args) :-
     (   memberchk(help(true), Opts)
     ->  write(Help_Text),
         halt
-    ;   memberchk(help(Path), Opts),
+    ;   memberchk(path(Path), Opts),
         Path \= false
     ->  true
     ;   write(Help_Text),
         halt),
 
     database_name_list(Database_Names),
-
     forall(
         member(DBN, Database_Names),
         (   make_database_from_database_name(Database_Name,Database),
